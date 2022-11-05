@@ -40,7 +40,7 @@ const CurrentModal = {
     NONE: "NONE",
     DELETE_LIST: "DELETE_LIST",
     EDIT_SONG: "EDIT_SONG",
-    REMOVE_SONG: "REMOVE_SONG"
+    REMOVE_SONG: "REMOVE_SONG",
 }
 
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
@@ -323,15 +323,23 @@ function GlobalStoreContextProvider(props) {
             let response = await api.deletePlaylistById(id);
             if (response.data.success) {
                 store.loadIdNamePairs();
-                history.push("/playlist");
-                console.log("JOEJEOJEOJ");
                 history.push("/");
+                store.unmarkListForDeletion();
             }
         }
         processDelete(id);
     }
     store.deleteMarkedList = function () {
         store.deleteList(store.listIdMarkedForDeletion);
+        store.hideModals();
+    }
+
+    store.unmarkListForDeletion = function () {
+        console.log("THISHTIS");
+        storeReducer({
+            type: GlobalStoreActionType.MARK_LIST_FOR_DELETION,
+            payload: { id: null, playlist: null }
+        });
         store.hideModals();
     }
     // THIS FUNCTION SHOWS THE MODAL FOR PROMPTING THE USER

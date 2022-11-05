@@ -70,17 +70,27 @@ function AuthContextProvider(props) {
     }
 
     auth.registerUser = async function (firstName, lastName, email, password, passwordVerify) {
-        const response = await api.registerUser(firstName, lastName, email, password, passwordVerify);
-        if (response.status === 200) {
-            authReducer({
-                type: AuthActionType.REGISTER_USER,
-                payload: {
-                    user: response.data.user
-                }
-            })
+        console.log("joe1");
+        const response = await api.registerUser(firstName, lastName, email, password, passwordVerify)
+            .catch(err => {
+                console.log("err: " + err);
 
-            //history.push("/login");
-            auth.loginUser(email, password); // Auto-login!!!
+                // This is where you would probably .. nwait no
+
+            });
+        //console.log("joe2");
+        if (response != null) {
+            if (response.status === 200) {
+                authReducer({
+                    type: AuthActionType.REGISTER_USER,
+                    payload: {
+                        user: response.data.user
+                    }
+                })
+
+                //history.push("/login");
+                auth.loginUser(email, password); // Auto-login!!!
+            }
         }
     }
 
