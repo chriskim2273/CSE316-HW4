@@ -41,6 +41,7 @@ const CurrentModal = {
     DELETE_LIST: "DELETE_LIST",
     EDIT_SONG: "EDIT_SONG",
     REMOVE_SONG: "REMOVE_SONG",
+    ALERT: "ALERT",
 }
 
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
@@ -530,6 +531,22 @@ function GlobalStoreContextProvider(props) {
             payload: null
         });
     }
+
+    let handleKeyDown = (event) => {
+        if (event.ctrlKey) {
+            if ((event.key === 'y') || (event.key === 'Y')) {
+                console.log('REDO');
+                store.redo();
+            }
+            else if ((event.key === 'z') || (event.key === 'Z')) {
+                console.log('UNDO');
+                store.undo();
+            }
+        }
+    }
+    // Control Z (+SHIFT)
+    window.addEventListener('keydown', handleKeyDown)
+
 
     return (
         <GlobalStoreContext.Provider value={{

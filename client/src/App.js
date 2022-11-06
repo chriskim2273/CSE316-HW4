@@ -1,8 +1,9 @@
 import './App.css';
-import { React } from 'react'
+import { React, useContext } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { AuthContextProvider } from './auth';
-import { GlobalStoreContextProvider } from './store'
+import { GlobalStoreContext, GlobalStoreContextProvider } from './store'
+
 import {
     AppBanner,
     HomeWrapper,
@@ -22,11 +23,11 @@ import {
   
   @author McKilla Gorilla
 */
-const App = () => {   
+const App = () => {
     return (
         <BrowserRouter>
             <AuthContextProvider>
-                <GlobalStoreContextProvider>              
+                <GlobalStoreContextProvider>
                     <AppBanner />
                     <Switch>
                         <Route path="/" exact component={HomeWrapper} />

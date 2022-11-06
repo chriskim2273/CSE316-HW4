@@ -26,6 +26,7 @@ export default function LoginScreen() {
             formData.get('email'),
             formData.get('password')
         );
+        //Check if there is an error message or request failed, if so, set state for alert and set error message to that state.
 
     };
 
