@@ -3,6 +3,7 @@ import GlobalStoreContext from '../store';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import Alert from '@mui/material/Alert';
 
 const style = {
     position: 'absolute',
@@ -35,9 +36,9 @@ export default function MUIDeleteModal() {
         >
             <Box sx={style}>
                 <div className="modal-dialog">
-                    <header className="dialog-header">
+                    <Alert severity="warning" className="dialog-header">
                         Delete the {name} List?
-                    </header>
+                    </Alert>
                     <div id="confirm-cancel-container">
                         <button
                             id="dialog-yes-button"

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import AuthContext from '../auth'
 
 import Copyright from './Copyright'
@@ -15,23 +15,57 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import Collapse from '@mui/material/Collapse';
 
 export default function LoginScreen() {
     const { auth } = useContext(AuthContext);
+    const [alert, setAlert] = useState(null);
+    const [alertOpen, setAlertOpen] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        auth.loginUser(
-            formData.get('email'),
-            formData.get('password')
-        );
+        if (formData.get('email') && formData.get('password')) {
+            auth.loginUser(
+                formData.get('email'),
+                formData.get('password')
+            );
+        } else {
+            if (!formData.get('email') && formData.get('password')) {
+                setAlert("Please input your email.");
+                console.log(alert);
+            }
+            else if (formData.get('email') && !formData.get('password')) {
+                setAlert("Please input your password.");
+                console.log(alert);
+            }
+            else {
+                setAlert("Please input all fields.");
+                console.log(alert);
+            }
+            setAlertOpen(true);
+        }
         //Check if there is an error message or request failed, if so, set state for alert and set error message to that state.
 
     };
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
+            <Modal
+                open={alertOpen}
+                onClose={() => { }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Stack sx={{ width: '100%' }} spacing={2}>
+                    <Collapse in={alertOpen}>
+                        <Alert onClose={() => { setAlertOpen(!alertOpen); }} sx={{ mb: 2 }} severity="error">{alert}</Alert>
+                    </Collapse>
+                </Stack>
+            </Modal>
             <CssBaseline />
             <Grid
                 item

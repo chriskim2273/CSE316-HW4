@@ -74,8 +74,8 @@ loginUser = async (req, res) => {
             success: true,
             user: {
                 firstName: existingUser.firstName,
-                lastName: existingUser.lastName,  
-                email: existingUser.email              
+                lastName: existingUser.lastName,
+                email: existingUser.email
             }
         })
 
@@ -101,13 +101,16 @@ registerUser = async (req, res) => {
         if (!firstName || !lastName || !email || !password || !passwordVerify) {
             return res
                 .status(400)
-                .json({ errorMessage: "Please enter all required fields." });
+                .json({
+                    success: false, errorMessage: "Please enter all required fields."
+                });
         }
         console.log("all fields provided");
         if (password.length < 8) {
             return res
                 .status(400)
                 .json({
+                    success: false,
                     errorMessage: "Please enter a password of at least 8 characters."
                 });
         }
@@ -116,6 +119,7 @@ registerUser = async (req, res) => {
             return res
                 .status(400)
                 .json({
+                    success: false,
                     errorMessage: "Please enter the same password twice."
                 })
         }
@@ -154,8 +158,8 @@ registerUser = async (req, res) => {
             success: true,
             user: {
                 firstName: savedUser.firstName,
-                lastName: savedUser.lastName,  
-                email: savedUser.email              
+                lastName: savedUser.lastName,
+                email: savedUser.email
             }
         })
 

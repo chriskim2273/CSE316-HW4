@@ -71,13 +71,8 @@ function AuthContextProvider(props) {
 
     auth.registerUser = async function (firstName, lastName, email, password, passwordVerify) {
         console.log("joe1");
-        const response = await api.registerUser(firstName, lastName, email, password, passwordVerify)
-            .catch(err => {
-                console.log("err: " + err);
-
-                // This is where you would probably .. nwait no
-
-            });
+        const response = await api.registerUser(firstName, lastName, email, password, passwordVerify);
+        console.log("TETETE:" + response);
         //console.log("joe2");
         if (response != null) {
             if (response.status === 200) {
@@ -90,6 +85,10 @@ function AuthContextProvider(props) {
 
                 //history.push("/login");
                 auth.loginUser(email, password); // Auto-login!!!
+            }
+            else {
+                console.log("THIS IS RETURNED");
+                return response;
             }
         }
     }

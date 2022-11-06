@@ -26,19 +26,26 @@ const api = axios.create({
 export const getLoggedIn = () => api.get(`/loggedIn/`);
 export const loginUser = (email, password) => {
     return api.post(`/login/`, {
-        email : email,
-        password : password
+        email: email,
+        password: password
     })
 }
 export const logoutUser = () => api.get(`/logout/`)
 export const registerUser = (firstName, lastName, email, password, passwordVerify) => {
-    return api.post(`/register/`, {
-        firstName : firstName,
-        lastName : lastName,
-        email : email,
-        password : password,
-        passwordVerify : passwordVerify
-    })
+    let resp = api.post(`/register/`, {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        passwordVerify: passwordVerify
+    }).catch(err => {
+        return err.response.data;
+
+        // This is where you would probably .. nwait no
+
+    });
+    console.log("RESPSPPS" + resp);
+    return resp;
 }
 const apis = {
     getLoggedIn,
