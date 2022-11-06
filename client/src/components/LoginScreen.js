@@ -28,14 +28,20 @@ export default function LoginScreen() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        auth.loginUser(
+        let joe = auth.loginUser(
             formData.get('email'),
             formData.get('password')
         ).then((val) => {
-            if (val.errorMessage) {
-                setAlert(val.errorMessage);
-                setAlertOpen(true);
-                console.log(alert);
+            if (val) {
+                if (val.errorMessage) {
+                    setAlert(val.errorMessage);
+                    setAlertOpen(true);
+                    console.log("alert");
+                }
+                else {
+                    setAlertOpen(false);
+                    setAlert(null);
+                }
             }
         });
         //Check if there is an error message or request failed, if so, set state for alert and set error message to that state.
