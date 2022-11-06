@@ -28,7 +28,12 @@ export const loginUser = (email, password) => {
     return api.post(`/login/`, {
         email: email,
         password: password
-    })
+    }).catch(err => {
+        return err.response.data;
+
+        // This is where you would probably .. nwait no
+
+    });
 }
 export const logoutUser = () => api.get(`/logout/`)
 export const registerUser = (firstName, lastName, email, password, passwordVerify) => {

@@ -96,16 +96,20 @@ function AuthContextProvider(props) {
     auth.loginUser = async function (email, password) {
         const response = await api.loginUser(email, password);
         // Catch error and return the Error Message and make it the Alert
-        if (response.status === 200) {
-            authReducer({
-                type: AuthActionType.LOGIN_USER,
-                payload: {
-                    user: response.data.user
-                }
-            })
-            history.push("/");
+        if (response != null) {
+            if (response.status === 200) {
+                authReducer({
+                    type: AuthActionType.LOGIN_USER,
+                    payload: {
+                        user: response.data.user
+                    }
+                })
+                history.push("/");
+            }
+            else {
+                return response;
+            }
         }
-
     }
 
     auth.logoutUser = async function () {

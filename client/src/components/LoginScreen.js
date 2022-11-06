@@ -28,26 +28,16 @@ export default function LoginScreen() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        if (formData.get('email') && formData.get('password')) {
-            auth.loginUser(
-                formData.get('email'),
-                formData.get('password')
-            );
-        } else {
-            if (!formData.get('email') && formData.get('password')) {
-                setAlert("Please input your email.");
+        auth.loginUser(
+            formData.get('email'),
+            formData.get('password')
+        ).then((val) => {
+            if (val.errorMessage) {
+                setAlert(val.errorMessage);
+                setAlertOpen(true);
                 console.log(alert);
             }
-            else if (formData.get('email') && !formData.get('password')) {
-                setAlert("Please input your password.");
-                console.log(alert);
-            }
-            else {
-                setAlert("Please input all fields.");
-                console.log(alert);
-            }
-            setAlertOpen(true);
-        }
+        });
         //Check if there is an error message or request failed, if so, set state for alert and set error message to that state.
 
     };
