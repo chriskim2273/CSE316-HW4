@@ -14,10 +14,14 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert'
 import Stack from '@mui/material/Stack'
+import Modal from '@mui/material/Modal'
+import GlobalStoreContext from '../store';
 import Collapse from '@mui/material/Collapse'
+import MUIAlertModal from './MUIAlertModal'
 
 export default function RegisterScreen() {
     const { auth } = useContext(AuthContext);
+    const { store } = useContext(GlobalStoreContext);
     const [alert, setAlert] = useState(null);
     const [alertOpen, setAlertOpen] = useState(false);
 
@@ -42,13 +46,25 @@ export default function RegisterScreen() {
         }
     };
 
+    let modalJSX = "";
+    if (false) {
+        modalJSX = <MUIAlertModal />;
+    }
+
     return (
         <Container component="main" maxWidth="xs">
-            <Stack sx={{ width: '100%' }} spacing={2}>
-                <Collapse in={alertOpen}>
-                    <Alert onClose={() => { setAlertOpen(!alertOpen); }} sx={{ mb: 2 }} severity="error">{alert}</Alert>
-                </Collapse>
-            </Stack>
+            <Modal
+                open={alertOpen}
+                onClose={() => { }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Stack sx={{ width: '100%' }} spacing={2}>
+                    <Collapse in={alertOpen}>
+                        <Alert onClose={() => { setAlertOpen(!alertOpen); }} sx={{ mb: 2 }} severity="error">{alert}</Alert>
+                    </Collapse>
+                </Stack>
+            </Modal>
             <CssBaseline />
             <Box
                 sx={{
