@@ -17,7 +17,6 @@ import Stack from '@mui/material/Stack'
 import Modal from '@mui/material/Modal'
 import GlobalStoreContext from '../store';
 import Collapse from '@mui/material/Collapse'
-import MUIAlertModal from './MUIAlertModal'
 
 export default function RegisterScreen() {
     const { auth } = useContext(AuthContext);
@@ -52,10 +51,6 @@ export default function RegisterScreen() {
         }
     };
 
-    let modalJSX = "";
-    if (false) {
-        modalJSX = <MUIAlertModal />;
-    }
 
     return (
         <Container component="main" maxWidth="xs">

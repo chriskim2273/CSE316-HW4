@@ -24,12 +24,18 @@ export default function MUIEditSongModal() {
     const [youTubeId, setYouTubeId] = useState(store.currentSong.youTubeId);
 
     function handleConfirmEditSong() {
-        let newSongData = {
-            title: title,
-            artist: artist,
-            youTubeId: youTubeId
-        };
-        store.addUpdateSongTransaction(store.currentSongIndex, newSongData);
+        if (title !== store.currentSong.title || artist !== store.currentSong.artist || youTubeId !== store.currentSong.youTubeId) {
+            let newSongData = {
+                title: title,
+                artist: artist,
+                youTubeId: youTubeId
+            };
+            store.addUpdateSongTransaction(store.currentSongIndex, newSongData);
+        }
+        else {
+            handleCancelEditSong();
+        }
+
     }
 
     function handleCancelEditSong() {

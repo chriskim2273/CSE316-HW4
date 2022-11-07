@@ -30,7 +30,8 @@ export const GlobalStoreActionType = {
     SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE",
     EDIT_SONG: "EDIT_SONG",
     REMOVE_SONG: "REMOVE_SONG",
-    HIDE_MODALS: "HIDE_MODALS"
+    HIDE_MODALS: "HIDE_MODALS",
+    LOG_OUT: "LOG_OUT"
 }
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -72,12 +73,25 @@ function GlobalStoreContextProvider(props) {
     const storeReducer = (action) => {
         const { type, payload } = action;
         switch (type) {
+            case GlobalStoreActionType.LOG_OUT: {
+                return setStore({
+                    currentModal: CurrentModal.NONE,
+                    idNamePairs: [],
+                    currentList: null,
+                    currentSongIndex: -1,
+                    currentSong: null,
+                    newListCounter: 0,
+                    listNameActive: false,
+                    listIdMarkedForDeletion: null,
+                    listMarkedForDeletion: null
+                })
+            }
             // LIST UPDATE OF ITS NAME
             case GlobalStoreActionType.CHANGE_LIST_NAME: {
                 return setStore({
                     currentModal: CurrentModal.NONE,
                     idNamePairs: payload.idNamePairs,
-                    currentList: payload.playlist,
+                    currentList: null,//payload.playlist,
                     currentSongIndex: -1,
                     currentSong: null,
                     newListCounter: store.newListCounter,
@@ -218,6 +232,13 @@ function GlobalStoreContextProvider(props) {
     // THESE ARE THE FUNCTIONS THAT WILL UPDATE OUR STORE AND
     // DRIVE THE STATE OF THE APPLICATION. WE'LL CALL THESE IN 
     // RESPONSE TO EVENTS INSIDE OUR COMPONENTS.
+
+    store.logOut = function () {
+        storeReducer({
+            type: GlobalStoreActionType.LOG_OUT,
+            payload: {}
+        });
+    }
 
     // THIS FUNCTION PROCESSES CHANGING A LIST NAME
     store.changeListName = function (id, newName) {
@@ -512,7 +533,7 @@ function GlobalStoreContextProvider(props) {
         tps.doTransaction();
     }
     store.canAddNewSong = function () {
-        return (store.currentList !== null);
+        return (store.currentList !== null && store.currentModal === "NONE");
     }
     store.canUndo = function () {
         return ((store.currentList !== null) && tps.hasTransactionToUndo());
@@ -521,7 +542,7 @@ function GlobalStoreContextProvider(props) {
         return ((store.currentList !== null) && tps.hasTransactionToRedo());
     }
     store.canClose = function () {
-        return (store.currentList !== null);
+        return (store.currentList !== null && store.currentModal === "NONE");
     }
 
     // THIS FUNCTION ENABLES THE PROCESS OF EDITING A LIST NAME

@@ -1,4 +1,5 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import GlobalStoreContext from '../store';
 import { useHistory } from 'react-router-dom'
 import api from './auth-request-api'
 
@@ -19,6 +20,8 @@ function AuthContextProvider(props) {
         loggedIn: false
     });
     const history = useHistory();
+
+    const { store } = useContext(GlobalStoreContext);
 
     useEffect(() => {
         auth.getLoggedIn();
@@ -119,6 +122,7 @@ function AuthContextProvider(props) {
                 type: AuthActionType.LOGOUT_USER,
                 payload: null
             })
+            //store.logOut();
             history.push("/");
         }
     }
