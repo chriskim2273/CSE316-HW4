@@ -122,7 +122,7 @@ function AuthContextProvider(props) {
                 type: AuthActionType.LOGOUT_USER,
                 payload: null
             })
-            //store.logOut();
+            console.log("Store" + store);
             history.push("/");
         }
     }
