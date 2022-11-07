@@ -28,27 +28,20 @@ export default function RegisterScreen() {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         // This is where you would check the inputs and send the MUI error stuff for bad inputs / existing accounts with same email..
-        if (formData.get('firstName') != "JOE") {
 
-            let registerResponse = auth.registerUser(
-                formData.get('firstName'),
-                formData.get('lastName'),
-                formData.get('email'),
-                formData.get('password'),
-                formData.get('passwordVerify')
-            ).then((val) => {
-                if (val.errorMessage) {
-                    setAlert(val.errorMessage);
-                    setAlertOpen(true);
-                    console.log(alert);
-                }
-            });
-        }
-        else {
-            setAlert("SOMETHING IS WRONG. FIX IT!");
-            setAlertOpen(true);
-            console.log(alert);
-        }
+        let registerResponse = auth.registerUser(
+            formData.get('firstName'),
+            formData.get('lastName'),
+            formData.get('email'),
+            formData.get('password'),
+            formData.get('passwordVerify')
+        ).then((val) => {
+            if (val.errorMessage) {
+                setAlert(val.errorMessage);
+                setAlertOpen(true);
+                console.log(alert);
+            }
+        });
     };
 
 
